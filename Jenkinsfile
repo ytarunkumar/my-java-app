@@ -4,28 +4,21 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                // Checkout code from Git
                 checkout scm
             }
         }
 
         stage('Build') {
             steps {
+                // Build your Java application
                 sh 'javac HelloWorld.java'
             }
         }
 
         stage('Test') {
             steps {
-                // Add testing steps here (e.g., using JUnit)
-            }
-        }
-
-        stage('Dockerize') {
-            steps {
-                script {
-                    def dockerImage = docker.build("my-java-app:${BUILD_NUMBER}")
-                    dockerImage.push()
-                }
+                // Add testing steps here
             }
         }
     }
