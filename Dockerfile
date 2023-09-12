@@ -1,14 +1,23 @@
+# Use the official OpenJDK image with JDK as the build environment
+FROM openjdk:11-slim AS build
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy your Java source code files into the container
+COPY . .
+
+# Compile your Java application
+RUN javac HelloWorld.java
+
 # Use the official OpenJDK image as the runtime environment
 FROM openjdk:11-jre-slim
 
 # Set the working directory
 WORKDIR /app
 
-# Copy your Java source code files into the container
-COPY . .
-
-# Compile your Java application (adjust the compilation command as needed)
-RUN javac HelloWorld.java
+# Copy the compiled Java class
+COPY --from=build /app/HelloWorld.class .
 
 # Expose the port your application will listen on (adjust as needed)
 EXPOSE 8080
